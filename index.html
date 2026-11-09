@@ -214,7 +214,7 @@ const save=()=>{try{localStorage.setItem("stewart-done",JSON.stringify(done))}ca
 const app=document.getElementById("app");
 function home(){
  const n=done.length;
- app.innerHTML=`<h1>Plan de estudio · Precálculo</h1><p class="mu">Basado en el libro de James Stewart. Elige una jornada para entrar al tema.</p>
+ app.innerHTML=`<h1>Plan de estudio Aval </h1><p class="mu">Basado en el libro de James Stewart. Elige una jornada para entrar al tema.</p>
  <div class="row" style="margin:0"><b>Progreso del plan</b><b>${n}/${T.length}</b></div><div class="bar"><i style="width:${n/T.length*100}%"></i></div>
  <div class="grid">${T.map((x,i)=>`<button class="t ${done.includes(i)?"done":""}" data-a="topic" data-i="${i}"><b>${x.d}</b><span>${x.t}</span></button>`).join("")}</div>
  <p class="mu" style="margin-top:20px">Las secciones indicadas son aproximadas: la numeración cambia según la edición de tu libro.</p>`;
