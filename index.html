@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plan de estudio · Precálculo (Stewart)</title>
+<style>
+:root{
+  --bg: #f7f6f2;
+  --card: #ffffff;
+  --tx: #1c2541;
+  --mu: #5c6b73;
+  --bd: #74c0fc;
+  --ac: #0b7285;
+  --ok: #2e7d4f;
+  --hi: #e7f5ff;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  color:var(--tx);
+  font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background-color: var(--bg);
+  background-image: linear-gradient(#a5d8ff 1px, transparent 1px), linear-gradient(90deg, #a5d8ff 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+main{max-width:900px;margin:0 auto;padding:20px 16px 48px}
+h1,h2,h3,.t span,button.b,button.g,summary{font-family:"Segoe Print","Bradley Hand","Chalkboard SE","Comic Sans MS",cursive,sans-serif}
+h1{font-size:1.6rem;margin:.2em 0;text-decoration:underline wavy var(--ac);text-underline-offset:8px}
+h2{font-size:1.4rem;margin:.2em 0}
+h3{font-size:1.05rem;margin:0 0 8px}
+.mu{color:var(--mu);font-size:.9rem}
+.bar{height:16px;background:var(--card);border:2px solid var(--bd);border-radius:8px;overflow:hidden;margin:8px 0 20px}
+.bar i{display:block;height:100%;background:repeating-linear-gradient(45deg,var(--ok) 0 10px,transparent 10px 14px);width:0;transition:width .3s}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.t{
+  background:var(--card);
+  border:2px solid var(--bd);
+  border-radius:4px 16px 6px 14px;
+  box-shadow:4px 4px 0 var(--bd);
+  padding:14px;
+  text-align:left;
+  color:var(--tx);
+  font:inherit;
+  cursor:pointer;
+  position:relative;
+  transform:rotate(-1deg);
+  transition:transform .15s;
+}
+.t:nth-child(even){transform:rotate(1deg)}
+.t:nth-child(3n){border-left:10px solid var(--ac)}
+.t:nth-child(3n+1){border-top:10px solid var(--ok)}
+.t:hover,.t:focus-visible{transform:rotate(0) translateY(-3px);outline:none}
+.t b{display:block;color:var(--ac);font-size:.85rem}
+.t span{font-weight:600}
+.t.done{border-color:var(--ok)}
+.t.done::after{content:"✓";position:absolute;top:10px;right:12px;color:var(--ok);font-weight:700}
+.card{
+  background:var(--card);
+  border:2px solid var(--bd);
+  border-radius:6px;
+  box-shadow:5px 5px 0 var(--bd);
+  padding:16px 18px 16px 56px;
+  margin:14px 0;
+  background-image:linear-gradient(90deg,transparent 38px,var(--bd) 38px,var(--bd) 40px,transparent 40px);
+}
+.card.ex{border-left:2px solid var(--bd)}
+.f{background:var(--hi);border:2px dashed var(--ac);border-radius:10px;padding:8px 12px;margin:8px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.05rem}
+button.b,button.g{border:2px solid var(--bd);border-radius:4px 12px;box-shadow:3px 3px 0 var(--bd);font:inherit;cursor:pointer}
+button.b{background:var(--ac);color:#fff;padding:9px 14px}
+button.g{background:var(--card);color:var(--tx);padding:8px 12px}
+button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--bd)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:14px}
+details{margin-top:8px}
+summary{cursor:pointer;color:var(--ac);font-weight:600}
+details p{margin:6px 0 0;padding:8px 12px;background:var(--hi);border-radius:8px;border-left:4px solid var(--ok)}
+ul{padding-left:20px;margin:6px 0}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const T=[
+{d:"9 nov",t:"Números reales",c:"Cap. 1 · Fundamentos",
+th:`<p>Los <b>números reales</b> ℝ reúnen a los racionales ℚ (fracciones p/q, decimales finitos o periódicos) y a los irracionales (√2, π, e). Dentro de los racionales están los enteros ℤ y los naturales ℕ.</p><ul><li>Propiedades: conmutativa, asociativa y distributiva a(b + c) = ab + ac.</li><li>Intervalos: (a, b) abierto, [a, b] cerrado, (a, b] semiabierto.</li><li>Valor absoluto: |x| es la distancia de x a 0; |a − b| es la distancia entre a y b.</li></ul>`,
+ex:["Calcula |−5| − |2 − 9|.","|−5| = 5 y |2 − 9| = |−7| = 7. Resultado: 5 − 7 = −2."],
+q:[["Clasifica √9, 0,25, π y −3/4 (natural, racional o irracional).","√9 = 3 es natural (y real); 0,25 y −3/4 son racionales; π es irracional."],["Escribe −1 &lt; x ≤ 4 como intervalo.","(−1, 4]"],["Calcula (−3, 1] ∩ [0, 5).","Se queda lo común a ambos: [0, 1]."]]},
+{d:"10 nov",t:"Potencias",c:"Cap. 1 · Exponentes",
+th:`<p>Leyes de los exponentes (a ≠ 0):</p><div class="f">aᵐ · aⁿ = aᵐ⁺ⁿ<br>aᵐ / aⁿ = aᵐ⁻ⁿ<br>(aᵐ)ⁿ = aᵐⁿ<br>(ab)ⁿ = aⁿbⁿ</div><p>Además a⁰ = 1 y a⁻ⁿ = 1/aⁿ. La <b>notación científica</b> escribe un número como c × 10ⁿ con 1 ≤ c &lt; 10.</p>`,
+ex:["Simplifica (2x³y⁻²)³ / (4x⁻¹y).","Numerador: 8x⁹y⁻⁶. Dividimos: 8/4 = 2, x⁹/x⁻¹ = x¹⁰, y⁻⁶/y = y⁻⁷. Resultado: 2x¹⁰/y⁷."],
+q:[["Calcula (3⁴ · 3⁻²) / 3.","3⁴⁻²⁻¹ = 3¹ = 3."],["Simplifica (a²b⁻³)⁻².","a⁻⁴b⁶ = b⁶/a⁴."],["Escribe 0,00045 en notación científica.","4,5 × 10⁻⁴"]]},
+{d:"11 nov",t:"Radicales",c:"Cap. 1 · Exponentes y radicales",
+th:`<p>Un radical es una potencia fraccionaria: ⁿ√a = a^(1/n) y a^(m/n) = (ⁿ√a)ᵐ. Además ⁿ√(ab) = ⁿ√a·ⁿ√b.</p><p><b>Racionalizar</b> es quitar radicales del denominador: multiplicamos arriba y abajo por el radical (o por el <i>conjugado</i> si hay una suma o resta).</p><div class="f">(a + √b)(a − √b) = a² − b</div>`,
+ex:["Racionaliza 3 / (√5 − √2).","Multiplicamos por el conjugado (√5 + √2): 3(√5 + √2) / (5 − 2) = √5 + √2."],
+q:[["Simplifica √72.","72 = 36·2, así que √72 = 6√2."],["Calcula 27^(2/3).","(∛27)² = 3² = 9."],["Racionaliza 4/√8.","√8 = 2√2, entonces 4/(2√2) = 2/√2 = √2."]]},
+{d:"12 nov",t:"Expresiones algebraicas",c:"Cap. 1 · Expresiones algebraicas",
+th:`<p>Un <b>polinomio</b> es una suma de términos axⁿ; su grado es el mayor exponente. Se suman agrupando términos semejantes y se multiplican con la propiedad distributiva.</p><p>Productos notables:</p><div class="f">(a ± b)² = a² ± 2ab + b² &nbsp; (a − b)(a + b) = a² − b²<br>(a ± b)³ = a³ ± 3a²b + 3ab² ± b³</div>`,
+ex:["Expande (2x − 3)(x² + x − 1).","2x³ + 2x² − 2x − 3x² − 3x + 3 = 2x³ − x² − 5x + 3."],
+q:[["Expande (x + 4)².","x² + 8x + 16"],["Expande (3x − 2)(3x + 2).","9x² − 4"],["Resta (5x² − 3x + 1) − (2x² + x − 4).","3x² − 4x + 5"]]},
+{d:"13 nov",t:"Factorización",c:"Cap. 1 · Expresiones algebraicas",
+th:`<p>Factorizar es el proceso inverso a multiplicar. Orden recomendado: 1) factor común, 2) fórmulas notables, 3) trinomios, 4) agrupación.</p><div class="f">a² − b² = (a − b)(a + b)<br>a³ ± b³ = (a ± b)(a² ∓ ab + b²)<br>x² + (p + q)x + pq = (x + p)(x + q)</div>`,
+ex:["Factoriza 2x³ − 8x.","Factor común: 2x(x² − 4). Diferencia de cuadrados: 2x(x − 2)(x + 2)."],
+q:[["Factoriza x² + 5x + 6.","(x + 2)(x + 3)"],["Factoriza 6x² − 7x − 3.","(3x + 1)(2x − 3). Verifica: 6x² − 9x + 2x − 3."],["Factoriza x³ − 27.","(x − 3)(x² + 3x + 9)"]]},
+{d:"14 nov",t:"Ecuaciones",c:"Cap. 1 · Ecuaciones",
+th:`<p>Resolver una ecuación es hallar los valores que la hacen verdadera.</p><ul><li><b>Lineal:</b> despejar x.</li><li><b>Cuadrática</b> ax² + bx + c = 0: factorizar o usar la fórmula. El discriminante Δ = b² − 4ac indica 2, 1 o 0 soluciones reales.</li><li><b>Con radicales o fracciones:</b> siempre <i>verifica</i> las soluciones, pueden aparecer extrañas.</li></ul><div class="f">x = (−b ± √(b² − 4ac)) / 2a</div>`,
+ex:["Resuelve 2x² − 3x − 5 = 0.","Δ = 9 + 40 = 49, √Δ = 7. x = (3 ± 7)/4, es decir x = 5/2 o x = −1."],
+q:[["Resuelve 3(x − 2) = 2x + 1.","3x − 6 = 2x + 1, así que x = 7."],["Resuelve x² − x − 12 = 0.","(x − 4)(x + 3) = 0, entonces x = 4 o x = −3."],["Resuelve √(x + 2) = x.","Elevando: x + 2 = x², x² − x − 2 = 0, x = 2 o x = −1. Con x = −1 queda √1 = −1, falso (extraña). Solución: x = 2."]]},
+{d:"15 nov",t:"Evaluación 1",c:"Repaso de los temas 1 a 6",
+th:`<p>Repaso de los seis temas anteriores: reales, potencias, radicales, expresiones algebraicas, factorización y ecuaciones. Intenta resolver todo en papel antes de abrir cada solución, y anota qué temas te cuestan para volver a ellos.</p>`,
+ex:["Resuelve x² − 6x + 9 = 0.","Es (x − 3)² = 0, solución doble x = 3."],
+q:[["Expresa |x − 3| &lt; 2 como intervalo.","−2 &lt; x − 3 &lt; 2, o sea (1, 5)."],["Simplifica (x²y³)² / (xy)³.","x⁴y⁶ / (x³y³) = xy³."],["Factoriza completamente x⁴ − 16.","(x² + 4)(x² − 4) = (x² + 4)(x − 2)(x + 2)."],["Resuelve x² + 4x − 5 = 0.","(x + 5)(x − 1) = 0, entonces x = −5 o x = 1."],["Racionaliza 6/√3.","6√3/3 = 2√3."]]},
+{d:"16 nov",t:"Inecuaciones",c:"Cap. 1 · Desigualdades",
+th:`<p>Se resuelven como ecuaciones, pero <b>al multiplicar o dividir por un negativo se invierte el signo</b>.</p><ul><li><b>Polinomiales:</b> pasa todo a un lado, factoriza, marca los puntos críticos y arma una tabla de signos.</li><li><b>Valor absoluto:</b> |x| &lt; a ⇔ −a &lt; x &lt; a; &nbsp; |x| &gt; a ⇔ x &lt; −a o x &gt; a.</li></ul>`,
+ex:["Resuelve x² − x − 6 ≤ 0.","(x − 3)(x + 2) ≤ 0. Puntos críticos: −2 y 3. Signos: + en (−∞, −2), − en (−2, 3), + en (3, ∞). Solución: [−2, 3]."],
+q:[["Resuelve −2x + 3 &gt; 7.","−2x &gt; 4, y al dividir por −2: x &lt; −2. Intervalo (−∞, −2)."],["Resuelve x² − 4x − 5 &gt; 0.","(x − 5)(x + 1) &gt; 0 → (−∞, −1) ∪ (5, ∞)."],["Resuelve |2x − 1| ≤ 5.","−5 ≤ 2x − 1 ≤ 5 → −4 ≤ 2x ≤ 6 → [−2, 3]."]]},
+{d:"17 nov",t:"Geometría analítica",c:"Cap. 1 · Geometría de coordenadas",
+th:`<p>Combina álgebra y geometría usando el plano cartesiano.</p><div class="f">Distancia: d = √((x₂ − x₁)² + (y₂ − y₁)²)<br>Punto medio: ((x₁ + x₂)/2, (y₁ + y₂)/2)<br>Circunferencia: (x − h)² + (y − k)² = r²</div><p>Para pasar de la forma general a la canónica se <b>completa el cuadrado</b>.</p>
+<div style="margin-top:14px;padding:12px;background:var(--card);border:2px solid var(--bd);border-radius:10px;">
+  <b style="color:var(--ac);display:block;margin-bottom:6px;">📊 Gráfico interactivo: Geometría Analítica</b>
+  <p class="mu" style="margin:0 0 8px;">Visualiza conceptos clave en el plano cartesiano:</p>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateGeo('dist')">Distancia y P. Medio</button>
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateGeo('circle')">Circunferencia</button>
+  </div>
+  <canvas id="geoCanvas" width="400" height="220" style="width:100%;max-width:400px;background:#ffffff;border:1px solid var(--bd);border-radius:8px;display:block;margin:0 auto;"></canvas>
+</div>`,
+ex:["Distancia y punto medio entre (1, 2) y (4, 6).","d = √(9 + 16) = 5. Punto medio: (2,5; 4)."],
+q:[["Distancia entre (−2, 3) y (1, −1).","√(9 + 16) = 5."],["Ecuación de la circunferencia de centro (2, −3) y radio 4.","(x − 2)² + (y + 3)² = 16"],["Centro y radio de x² + y² − 6x + 4y − 3 = 0.","(x − 3)² + (y + 2)² = 3 + 9 + 4 = 16. Centro (3, −2), radio 4."]]},
+{d:"18 nov",t:"Concepto de función",c:"Cap. 2 · Funciones",
+th:`<p>Una <b>función</b> f asigna a cada x del dominio exactamente un valor f(x). Se puede representar con palabras, fórmula, tabla o gráfica.</p><ul><li><b>Prueba de la recta vertical:</b> una curva es gráfica de función si ninguna recta vertical la corta más de una vez.</li><li><b>Por partes:</b> la regla cambia según el valor de x.</li><li><b>Cociente de diferencias:</b> [f(a + h) − f(a)] / h, base de la derivada.</li></ul>
+<div style="margin-top:14px;padding:12px;background:var(--card);border:2px solid var(--bd);border-radius:10px;">
+  <b style="color:var(--ac);display:block;margin-bottom:6px;">📊 Gráfico interactivo: Prueba de la Recta Vertical</b>
+  <p class="mu" style="margin:0 0 8px;">Mueve la recta vertical para comprobar si representa una función:</p>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateFuncConcept('func')">Función (y = x² - 2)</button>
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateFuncConcept('nofunc')">No Función (x = y²)</button>
+  </div>
+  <canvas id="funcCanvas" width="400" height="220" style="width:100%;max-width:400px;background:#ffffff;border:1px solid var(--bd);border-radius:8px;display:block;margin:0 auto;"></canvas>
+</div>`,
+ex:["Si f(x) = x² − 3x + 1, calcula f(2) y f(a + 1).","f(2) = 4 − 6 + 1 = −1. f(a + 1) = a² + 2a + 1 − 3a − 3 + 1 = a² − a − 1."],
+q:[["Si f(x) = 2x² − x, calcula f(−1).","2(1) + 1 = 3."],["Si g(x) = 3x − 2, calcula [g(a + h) − g(a)] / h.","(3a + 3h − 2 − 3a + 2)/h = 3h/h = 3."],["Sea f(x) = x + 1 si x &lt; 0, y x² si x ≥ 0. Calcula f(−2) + f(3).","f(−2) = −1 y f(3) = 9. Suma: 8."]]},
+{d:"19 nov",t:"Dominio y rango",c:"Cap. 2 · Funciones",
+th:`<p>El <b>dominio</b> son los x permitidos; el <b>rango</b> son los y que resultan.</p><ul><li>No se puede dividir por cero: denominador ≠ 0.</li><li>Raíz de índice par: radicando ≥ 0.</li><li>Rango: observa la gráfica o despeja x en función de y.</li></ul>
+<div style="margin-top:14px;padding:12px;background:var(--card);border:2px solid var(--bd);border-radius:10px;">
+  <b style="color:var(--ac);display:block;margin-bottom:6px;">📊 Gráfico interactivo: Dominio y Rango</b>
+  <p class="mu" style="margin:0 0 8px;">Visualiza las restricciones en los ejes X (dominio) e Y (rango):</p>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateDomRange('sqrt')">f(x) = √(x - 1)</button>
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateDomRange('para')">f(x) = x² + 1</button>
+  </div>
+  <canvas id="domCanvas" width="400" height="220" style="width:100%;max-width:400px;background:#ffffff;border:1px solid var(--bd);border-radius:8px;display:block;margin:0 auto;"></canvas>
+</div>`,
+ex:["Dominio de f(x) = √(x − 1) / (x − 4).","Se necesita x − 1 ≥ 0 y x ≠ 4. Dominio: [1, 4) ∪ (4, ∞)."],
+q:[["Dominio de f(x) = 1/(x + 3).","Todos los reales excepto −3: ℝ ∖ {−3}."],["Dominio de g(x) = √(5 − 2x).","5 − 2x ≥ 0 → x ≤ 5/2. Dominio: (−∞, 5/2]."],["Rango de h(x) = x² + 2.","x² ≥ 0, entonces h(x) ≥ 2. Rango: [2, ∞)."]]},
+{d:"20 nov",t:"Funciones lineales",c:"Cap. 1-2 · Rectas y funciones lineales",
+th:`<p>Una función lineal es f(x) = mx + b: m es la pendiente y b la ordenada al origen.</p><div class="f">m = (y₂ − y₁)/(x₂ − x₁) &nbsp; Punto-pendiente: y − y₁ = m(x − x₁)</div><ul><li>Paralelas: misma pendiente.</li><li>Perpendiculares: m₁·m₂ = −1.</li><li>Una recta vertical x = a no es función.</li></ul>
+<div style="margin-top:14px;padding:12px;background:var(--card);border:2px solid var(--bd);border-radius:10px;">
+  <b style="color:var(--ac);display:block;margin-bottom:6px;">📊 Gráfico interactivo: Rectas y Pendientes</b>
+  <p class="mu" style="margin:0 0 8px;">Explora la pendiente y la relación entre rectas:</p>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateLinear('pos')">Pendiente Positiva (m>0)</button>
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateLinear('neg')">Pendiente Negativa (m&lt;0)</button>
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateLinear('para')">Paralelas (m₁ = m₂)</button>
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateLinear('perp')">Perpendiculares</button>
+  </div>
+  <canvas id="linearCanvas" width="400" height="220" style="width:100%;max-width:400px;background:#ffffff;border:1px solid var(--bd);border-radius:8px;display:block;margin:0 auto;"></canvas>
+</div>`,
+ex:["Recta por (1, 3) y (4, 9).","m = 6/3 = 2. y − 3 = 2(x − 1), es decir y = 2x + 1."],
+q:[["Pendiente entre (−1, 4) y (3, −2).","−6/4 = −3/2."],["Recta paralela a y = 3x − 5 que pasa por (2, 4).","y − 4 = 3(x − 2) → y = 3x − 2."],["Recta perpendicular a y = 2x + 1 que pasa por (4, 0).","m = −1/2. y = −½(x − 4) = −x/2 + 2."]]},
+{d:"21 nov",t:"Transformaciones",c:"Cap. 2 · Transformaciones de funciones",
+th:`<p>A partir de la gráfica de y = f(x) (c &gt; 0):</p><ul><li>f(x) + c sube c; f(x) − c baja c.</li><li>f(x − c) mueve c a la <b>derecha</b>; f(x + c) c a la izquierda.</li><li>−f(x) refleja respecto al eje x; f(−x) respecto al eje y.</li><li>a·f(x) estira (a &gt; 1) o comprime (0 &lt; a &lt; 1) en vertical.</li></ul>
+<div style="margin-top:14px;padding:12px;background:var(--card);border:2px solid var(--bd);border-radius:10px;">
+  <b style="color:var(--ac);display:block;margin-bottom:6px;">📊 Gráfico interactivo de transformaciones:</b>
+  <p class="mu" style="margin:0 0 8px;">Elige una transformación para observar el efecto visual sobre f(x) = x²:</p>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateTrans('base')">f(x) = x²</button>
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateTrans('up')">f(x) + 2 (Sube)</button>
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateTrans('right')">f(x - 2) (Derecha)</button>
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateTrans('reflect')">-f(x) (Reflejo X)</button>
+    <button class="g" style="padding:4px 8px;font-size:0.85rem;" onclick="updateTrans('stretch')">2·f(x) (Estira)</button>
+  </div>
+  <canvas id="transCanvas" width="400" height="220" style="width:100%;max-width:400px;background:#ffffff;border:1px solid var(--bd);border-radius:8px;display:block;margin:0 auto;"></canvas>
+</div>`,
+ex:["Describe y = −√(x + 2) + 3 a partir de y = √x.","2 a la izquierda, reflejo en el eje x, 3 hacia arriba. Dominio: [−2, ∞)."],
+q:[["Describe y = (x − 3)² + 1 a partir de y = x².","3 a la derecha y 1 arriba. Vértice (3, 1)."],["Describe y = 2|x| − 4 a partir de y = |x|.","Estiramiento vertical ×2 y desplazamiento de 4 hacia abajo."],["Si (2, 5) está en y = f(x), ¿qué punto está en y = f(x + 1) − 3?","f(x + 1) mueve 1 a la izquierda: (1, 5). Luego −3: (1, 2)."]]},
+{d:"22 nov",t:"Evaluación final",c:"Repaso de los temas 7 a 13",
+th:`<p>Repaso integrador: inecuaciones, geometría analítica, funciones, dominio y rango, rectas y transformaciones. Resuelve en papel y revisa después.</p>`,
+ex:["Resuelve |x − 1| &gt; 3.","x − 1 &lt; −3 o x − 1 &gt; 3 → x &lt; −2 o x &gt; 4."],
+q:[["Dominio de f(x) = √(x + 4)/(x − 2).","x ≥ −4 y x ≠ 2: [−4, 2) ∪ (2, ∞)."],["Si f(x) = x² − 1, simplifica [f(x + h) − f(x)] / h.","(2xh + h²)/h = 2x + h."],["Recta por (0, −1) y (2, 5).","m = 6/2 = 3, y = 3x − 1."],["Describe y = −(x + 1)² + 4 desde y = x².","1 a la izquierda, reflejo en el eje x, 4 arriba. Vértice (−1, 4)."],["Distancia entre (−1, 1) y (5, 9).","√(36 + 64) = 10."]]}
+];
+const X=[
+["Escribe 0,666… como fracción.::Sea x = 0,666…; 10x − x = 6, así que x = 2/3.","Resuelve |x − 4| = 3.::x − 4 = 3 o x − 4 = −3, es decir x = 7 o x = 1.","Calcula [−2, 3] ∪ (1, 6).::[−2, 6)","¿Qué distancia hay entre −3 y 8 en la recta numérica?::|8 − (−3)| = 11.","Escribe «x ≥ 2 o x &lt; −1» como unión de intervalos.::(−∞, −1) ∪ [2, ∞)","Simplifica 6(x + 2) − 3(x − 1).::6x + 12 − 3x + 3 = 3x + 15.","¿Es racional 0,1010010001…, con ceros que aumentan siempre?::No: no es periódico, por lo tanto es irracional."],
+["Calcula 2⁻³ + 2⁻².::1/8 + 1/4 = 3/8.","Simplifica (x⁵y⁻²) / (x²y⁻⁵).::x³y³","Simplifica (3a²b)³.::27a⁶b³","Calcula (3 × 10⁴)(2 × 10⁻⁷).::6 × 10⁻³","Simplifica (x⁻²y³ / z⁻¹)⁻².::(x⁻²y³z)⁻² = x⁴y⁻⁶z⁻² = x⁴/(y⁶z²).","Evalúa (−2)⁴ y −2⁴.::(−2)⁴ = 16, pero −2⁴ = −16.","Simplifica 4ⁿ⁺¹ / 2²ⁿ.::2²ⁿ = 4ⁿ, así que queda 4ⁿ·4/4ⁿ = 4."],
+["Simplifica √50 + √18.::5√2 + 3√2 = 8√2.","Calcula 16^(3/4).::(⁴√16)³ = 2³ = 8.","Simplifica ∛54.::∛(27·2) = 3∛2.","Racionaliza 2/(3 − √5).::2(3 + √5)/(9 − 5) = (3 + √5)/2.","Calcula (√3 + 2)(√3 − 2).::3 − 4 = −1.","Simplifica √(x⁵y³), con x, y &gt; 0.::x²y√(xy)","Calcula 8^(−2/3).::(∛8)⁻² = 2⁻² = 1/4."],
+["Expande (x − 2)³.::x³ − 6x² + 12x − 8","Expande y simplifica (2x + 1)² − (x − 3)².::4x² + 4x + 1 − x² + 6x − 9 = 3x² + 10x − 8.","Indica el grado de 5x⁴ − 3x² + x³ y ordénalo.::Grado 4. Ordenado: 5x⁴ + x³ − 3x².","Simplifica (x² − 9)/(x² − 3x).::(x − 3)(x + 3) / [x(x − 3)] = (x + 3)/x, con x ≠ 0, 3.","Suma 1/x + 1/(x + 1).::(x + 1 + x) / [x(x + 1)] = (2x + 1) / [x(x + 1)].","Multiplica (x² + 2x + 1)/(x − 1) · (x² − 1)/(x + 1).::(x² − 1)/(x + 1) = x − 1, que cancela el denominador. Queda (x + 1)².","Expande (x² − x + 2)(x + 3).::x³ + 3x² − x² − 3x + 2x + 6 = x³ + 2x² − x + 6."],
+["Factoriza 4x² − 25.::(2x − 5)(2x + 5)","Factoriza x³ + 3x² − 4x − 12 (agrupación).::x²(x + 3) − 4(x + 3) = (x + 3)(x² − 4) = (x + 3)(x − 2)(x + 2).","Factoriza 8x³ + 1.::(2x + 1)(4x² − 2x + 1)","Factoriza x² − 10x + 25.::(x − 5)²","Factoriza 2x² + 7x + 3.::(2x + 1)(x + 3)","Factoriza x⁴ − 5x² + 4.::(x² − 1)(x² − 4) = (x − 1)(x + 1)(x − 2)(x + 2).","Factoriza 3x³ − 12x² + 12x.::3x(x² − 4x + 4) = 3x(x − 2)²."],
+["Resuelve (x + 1)/2 − x/3 = 1.::Multiplica por 6: 3(x + 1) − 2x = 6, entonces x + 3 = 6 y x = 3.","Resuelve x² + 6x + 5 = 0.::(x + 1)(x + 5) = 0, entonces x = −1 o x = −5.","Resuelve 2x² − 4x + 5 = 0.::Δ = 16 − 40 = −24 &lt; 0: no hay soluciones reales.","Resuelve 3/(x − 2) = 6/x.::3x = 6(x − 2) → x = 4. Verifica: 3/2 = 6/4 ✓.","Resuelve |3x − 2| = 7.::3x − 2 = 7 → x = 3; 3x − 2 = −7 → x = −5/3.","Resuelve x³ − 4x = 0.::x(x − 2)(x + 2) = 0 → x = 0, 2, −2.","Un rectángulo tiene perímetro 30 y área 56. ¿Cuánto miden sus lados?::x(15 − x) = 56 → x² − 15x + 56 = 0 → (x − 7)(x − 8) = 0. Lados: 7 y 8."],
+["Resuelve 2(x − 3) = 5x + 3.::2x − 6 = 5x + 3 → −9 = 3x → x = −3.","Simplifica √48 − √12.::4√3 − 2√3 = 2√3.","Simplifica (x − 2)(x + 2) − (x − 1)².::x² − 4 − x² + 2x − 1 = 2x − 5.","Resuelve √(2x + 3) = x.::2x + 3 = x² → x² − 2x − 3 = 0 → x = 3 o x = −1. Con x = −1 queda 1 = −1, falso. Solución: x = 3.","Factoriza 2x³ − 2x² − 12x.::2x(x² − x − 6) = 2x(x − 3)(x + 2)."],
+["Resuelve 3x − 5 ≤ 2x + 1.::x ≤ 6, es decir (−∞, 6].","Resuelve −3 &lt; 2x + 1 ≤ 7.::−4 &lt; 2x ≤ 6 → (−2, 3].","Resuelve x² − 9 &lt; 0.::(x − 3)(x + 3) &lt; 0 → (−3, 3).","Resuelve (x + 1)/(x − 2) ≥ 0.::Puntos críticos −1 (incluido) y 2 (excluido). Solución: (−∞, −1] ∪ (2, ∞).","Resuelve |x + 2| &gt; 1.::x + 2 &lt; −1 o x + 2 &gt; 1 → (−∞, −3) ∪ (−1, ∞).","Resuelve x² + 2x ≥ 8.::x² + 2x − 8 = (x + 4)(x − 2) ≥ 0 → (−∞, −4] ∪ [2, ∞).","Resuelve x³ − x ≥ 0.::x(x − 1)(x + 1) ≥ 0. Con tabla de signos: [−1, 0] ∪ [1, ∞)."],
+["Halla el punto medio entre (−3, 5) y (7, −1).::(2, 2)","Demuestra que el triángulo (0,0), (3,4), (6,0) es isósceles.::Los lados miden 5, 5 y 6: hay dos lados iguales.","Escribe la circunferencia con diámetro de (−1, 2) a (5, 2).::Centro (2, 2), radio 3: (x − 2)² + (y − 2)² = 9.","Halla los interceptos de y = x² − 4x + 3.::Con y = 0: x = 1 y x = 3. Con x = 0: y = 3.","¿Es simétrica respecto al eje y la gráfica de y = x⁴ − 2x²?::Sí: al cambiar x por −x la ecuación no cambia.","Halla el punto del eje x equidistante de (1, 3) y (5, −1).::(x − 1)² + 9 = (x − 5)² + 1 → 8x = 16 → x = 2. Punto (2, 0).","Halla centro y radio de x² + y² + 2x − 8y + 8 = 0.::(x + 1)² + (y − 4)² = −8 + 1 + 16 = 9. Centro (−1, 4), radio 3."],
+["Si f(x) = √(x + 5), calcula f(−1) y f(4).::f(−1) = 2 y f(4) = 3.","Si f(x) = x² + 1, simplifica f(x + h) − f(x).::2xh + h²","¿Es y² = x una función de x?::No: x = 4 da y = 2 y y = −2 (falla la recta vertical).","Si f(x) = 3/(x − 1), calcula f(4) y f(2).::f(4) = 1 y f(2) = 3.","Si f(x) = |x| − 2, calcula f(−5).::5 − 2 = 3.","Si f(x) = x² − 2x, simplifica [f(3 + h) − f(3)] / h.::f(3) = 3 y f(3 + h) = 3 + 4h + h², así que el cociente es 4 + h.","Si f(x) = 2x + 3 y g(x) = x², calcula f(g(2)) y g(f(2)).::g(2) = 4 → f(4) = 11. f(2) = 7 → g(7) = 49."],
+["Dominio de f(x) = √(x² − 4).::x² ≥ 4 → (−∞, −2] ∪ [2, ∞).","Dominio de g(x) = 1/√(x − 3).::x − 3 &gt; 0 → (3, ∞).","Dominio de h(x) = (x + 1)/(x² − x − 6).::Denominador (x − 3)(x + 2) ≠ 0: ℝ ∖ {−2, 3}.","Rango de f(x) = √x − 1.::√x ≥ 0, entonces f(x) ≥ −1: [−1, ∞).","Rango de f(x) = −x² + 4.::(−∞, 4]","Dominio de f(x) = √(3 − x) + √(x + 1).::Se necesita x ≤ 3 y x ≥ −1: [−1, 3].","Rango de f(x) = |x − 2| + 1.::[1, ∞)"],
+["Escribe la recta de pendiente −2 e intercepto en y igual a 5.::y = −2x + 5","Pasa 3x − 4y = 12 a la forma y = mx + b.::y = (3/4)x − 3, con m = 3/4 y b = −3.","Halla los interceptos de 2x + 5y = 10.::Con y = 0: x = 5. Con x = 0: y = 2. Puntos (5, 0) y (0, 2).","¿Son paralelas y = 2x + 1 y 4x − 2y = 7?::La segunda es y = 2x − 7/2: misma pendiente, son paralelas.","Escribe la recta horizontal y la vertical que pasan por (3, −4).::Horizontal: y = −4. Vertical: x = 3.","Un taxi cobra 5 fijos más 2 por km. Escribe C(x) y calcula el costo de 12 km.::C(x) = 2x + 5, entonces C(12) = 29.","Escribe la recta por (−2, 1) con pendiente 1/2.::y − 1 = ½(x + 2) → y = x/2 + 2."],
+["Describe y = √(x − 1) + 2 desde y = √x.::1 a la derecha y 2 arriba. Dominio [1, ∞).","Describe y = −x² + 3 desde y = x².::Reflejo en el eje x y 3 hacia arriba.","¿Qué hace y = f(2x) a la gráfica de f?::La comprime horizontalmente a la mitad: (4, 3) pasa a (2, 3).","Describe y = (x + 2)² − 5 desde y = x².::2 a la izquierda y 5 abajo. Vértice (−2, −5).","Escribe y = x³ desplazada 4 arriba y 1 a la izquierda.::y = (x + 1)³ + 4","Si f(x) = |x − 2|, escribe f(−x).::|−x − 2| = |x + 2|.","¿Qué hace y = ½f(x)?::Comprime verticalmente a la mitad: (4, 6) pasa a (4, 3)."],
+["Resuelve x² − 2x − 8 ≥ 0.::(x − 4)(x + 2) ≥ 0 → (−∞, −2] ∪ [4, ∞).","Dominio de g(x) = √(x − 3)/(x² − 25).::x ≥ 3 y x ≠ ±5. Queda [3, 5) ∪ (5, ∞).","Recta perpendicular a 2x + 4y = 8 por (1, 1).::La dada es y = −x/2 + 2 (m = −1/2). Perpendicular: m = 2, y − 1 = 2(x − 1) → y = 2x − 1.","Centro y radio de x² + y² − 4x + 6y + 9 = 0.::(x − 2)² + (y + 3)² = −9 + 4 + 9 = 4. Centro (2, −3), radio 2.","Describe y = −2f(x − 1) + 3 si f(x) = x².::1 a la derecha, estiramiento ×2, reflejo en el eje x y 3 arriba. Vértice (1, 3)."]
+];
+X.forEach((a,i)=>a.forEach(s=>T[i].q.push(s.split("::"))));
+let done=[];try{done=JSON.parse(localStorage.getItem("stewart-done")||"[]")}catch(e){}
+const save=()=>{try{localStorage.setItem("stewart-done",JSON.stringify(done))}catch(e){}};
+const app=document.getElementById("app");
+function home(){
+ const n=done.length;
+ app.innerHTML=`<h1>Plan de estudio · Precálculo</h1><p class="mu">Basado en el libro de James Stewart. Elige una jornada para entrar al tema.</p>
+ <div class="row" style="margin:0"><b>Progreso del plan</b><b>${n}/${T.length}</b></div><div class="bar"><i style="width:${n/T.length*100}%"></i></div>
+ <div class="grid">${T.map((x,i)=>`<button class="t ${done.includes(i)?"done":""}" data-a="topic" data-i="${i}"><b>${x.d}</b><span>${x.t}</span></button>`).join("")}</div>
+ <p class="mu" style="margin-top:20px">Las secciones indicadas son aproximadas: la numeración cambia según la edición de tu libro.</p>`;
+ scrollTo(0,0);
+}
+function topic(i){
+ const x=T[i],ok=done.includes(i);
+ app.innerHTML=`<button class="g" data-a="home">← Volver al plan</button>
+ <p class="mu" style="margin:14px 0 0">${x.d} · Jornada ${i+1} de ${T.length}</p><h2>${x.t}</h2><p class="mu">📖 ${x.c}</p>
+ <div class="card"><h3>💡 Explicación</h3>${x.th}</div>
+ <div class="card ex"><h3>✅ Ejemplo resuelto</h3><p><b>${x.ex[0]}</b></p><details><summary>Ver solución</summary><p>${x.ex[1]}</p></details></div>
+ <div class="card"><h3>✏️ Ejercicios</h3>${x.q.map((e,k)=>`<p style="margin:12px 0 0"><b>${k+1}.</b> ${e[0]}</p><details><summary>Ver respuesta</summary><p>${e[1]}</p></details>`).join("")}</div>
+ <div class="row"><button class="b" data-a="mark" data-i="${i}">${ok?"✓ Completada (quitar)":"Marcar jornada completada"}</button>
+ <span>${i>0?`<button class="g" data-a="topic" data-i="${i-1}">← Anterior</button> `:""}${i<T.length-1?`<button class="g" data-a="topic" data-i="${i+1}">Siguiente →</button>`:""}</span></div>`;
+ scrollTo(0,0);
+ if(i===8) setTimeout(()=>updateGeo('dist'), 50);
+ else if(i===9) setTimeout(()=>updateFuncConcept('func'), 50);
+ else if(i===10) setTimeout(()=>updateDomRange('sqrt'), 50);
+ else if(i===11) setTimeout(()=>updateLinear('pos'), 50);
+ else if(i===12) setTimeout(()=>updateTrans('base'), 50);
+}
+
+function drawGrid(ctx, w, h, ox, oy, scale) {
+  ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle="#e7f5ff";
+  ctx.lineWidth=1;
+  for(let x=0; x<w; x+=scale){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke(); }
+  for(let y=0; y<h; y+=scale){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke(); }
+  ctx.strokeStyle="#89c4f4";
+  ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(0,oy); ctx.lineTo(w,oy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ox,0); ctx.lineTo(ox,h); ctx.stroke();
+}
+
+function updateGeo(type){
+  const cv=document.getElementById("geoCanvas");
+  if(!cv) return;
+  const ctx=cv.getContext("2d"), w=cv.width, h=cv.height, ox=w/2, oy=h/2, scale=20;
+  drawGrid(ctx, w, h, ox, oy, scale);
+  
+  if(type==='dist'){
+    const p1={x:-3, y:-2}, p2={x:3, y:3}, pm={x:0, y:0.5};
+    ctx.strokeStyle="#0b7285"; ctx.lineWidth=2.5;
+    ctx.beginPath(); ctx.moveTo(ox+p1.x*scale, oy-p1.y*scale); ctx.lineTo(ox+p2.x*scale, oy-p2.y*scale); ctx.stroke();
+    
+    [p1, p2].forEach(p=>{
+      ctx.fillStyle="#0b7285"; ctx.beginPath(); ctx.arc(ox+p.x*scale, oy-p.y*scale, 5, 0, Math.PI*2); ctx.fill();
+    });
+    ctx.fillStyle="#2e7d4f"; ctx.beginPath(); ctx.arc(ox+pm.x*scale, oy-pm.y*scale, 5, 0, Math.PI*2); ctx.fill();
+    ctx.font="12px sans-serif"; ctx.fillText("Punto Medio", ox+pm.x*scale+6, oy-pm.y*scale-6);
+  } else if(type==='circle'){
+    const cx=1, cy=-1, r=3;
+    ctx.strokeStyle="#0b7285"; ctx.lineWidth=2.5;
+    ctx.beginPath(); ctx.arc(ox+cx*scale, oy-cy*scale, r*scale, 0, Math.PI*2); ctx.stroke();
+    ctx.fillStyle="#c0392b"; ctx.beginPath(); ctx.arc(ox+cx*scale, oy-cy*scale, 4, 0, Math.PI*2); ctx.fill();
+    ctx.font="12px sans-serif"; ctx.fillStyle="#0b7285"; ctx.fillText("Centro (1,-1)", ox+cx*scale+6, oy-cy*scale+14);
+  }
+}
+
+function updateFuncConcept(type){
+  const cv=document.getElementById("funcCanvas");
+  if(!cv) return;
+  const ctx=cv.getContext("2d"), w=cv.width, h=cv.height, ox=w/2, oy=h/2, scale=20;
+  drawGrid(ctx, w, h, ox, oy, scale);
+  
+  ctx.strokeStyle="#0b7285"; ctx.lineWidth=2.5; ctx.beginPath();
+  if(type==='func'){
+    for(let px=-ox; px<=ox; px+=2){
+      let x = px/scale, y = x*x - 2;
+      let cx=ox+px, cy=oy-y*scale;
+      if(px===-ox) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy);
+    }
+  } else {
+    for(let py=-oy; py<=oy; py+=2){
+      let y = py/scale, x = y*y;
+      let cx=ox+x*scale, cy=oy-py;
+      if(py===-oy) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy);
+    }
+  }
+  ctx.stroke();
+  
+  // Recta vertical de prueba
+  const vx = 1.5;
+  ctx.strokeStyle="#c0392b"; ctx.lineWidth=2; ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(ox+vx*scale, 0); ctx.lineTo(ox+vx*scale, h); ctx.stroke();
+  ctx.setLineDash([]);
+  
+  ctx.fillStyle="#c0392b";
+  if(type==='func'){
+    ctx.beginPath(); ctx.arc(ox+vx*scale, oy-(vx*vx-2)*scale, 5, 0, Math.PI*2); ctx.fill();
+  } else {
+    let y1=Math.sqrt(vx), y2=-Math.sqrt(vx);
+    ctx.beginPath(); ctx.arc(ox+vx*scale, oy-y1*scale, 5, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(ox+vx*scale, oy-y2*scale, 5, 0, Math.PI*2); ctx.fill();
+  }
+}
+
+function updateDomRange(type){
+  const cv=document.getElementById("domCanvas");
+  if(!cv) return;
+  const ctx=cv.getContext("2d"), w=cv.width, h=cv.height, ox=w/2, oy=h/2, scale=20;
+  drawGrid(ctx, w, h, ox, oy, scale);
+  
+  if(type==='sqrt'){
+    // Dominio [1, ∞)
+    ctx.fillStyle="rgba(46,125,79,0.2)";
+    ctx.fillRect(ox+1*scale, 0, w-(ox+1*scale), h);
+    
+    ctx.strokeStyle="#0b7285"; ctx.lineWidth=2.5; ctx.beginPath();
+    for(let px=1*scale; px<=ox; px+=2){
+      let x = px/scale, y = Math.sqrt(x-1);
+      let cx=ox+px, cy=oy-y*scale;
+      if(px===1*scale) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy);
+    }
+    ctx.stroke();
+    
+    ctx.strokeStyle="#2e7d4f"; ctx.lineWidth=4;
+    ctx.beginPath(); ctx.moveTo(ox+1*scale, oy); ctx.lineTo(w, oy); ctx.stroke();
+    ctx.font="12px sans-serif"; ctx.fillStyle="#2e7d4f"; ctx.fillText("Dominio: [1, ∞)", ox+1.5*scale, oy+16);
+  } else if(type==='para'){
+    // Rango [1, ∞)
+    ctx.fillStyle="rgba(11,114,133,0.15)";
+    ctx.fillRect(0, 0, w, oy-1*scale);
+    
+    ctx.strokeStyle="#0b7285"; ctx.lineWidth=2.5; ctx.beginPath();
+    for(let px=-ox; px<=ox; px+=2){
+      let x = px/scale, y = x*x + 1;
+      let cx=ox+px, cy=oy-y*scale;
+      if(px===-ox) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy);
+    }
+    ctx.stroke();
+    
+    ctx.strokeStyle="#0b7285"; ctx.lineWidth=4;
+    ctx.beginPath(); ctx.moveTo(ox, oy-1*scale); ctx.lineTo(ox, 0); ctx.stroke();
+    ctx.font="12px sans-serif"; ctx.fillStyle="#0b7285"; ctx.fillText("Rango: [1, ∞)", ox+10, oy-1.5*scale);
+  }
+}
+
+function updateLinear(type){
+  const cv=document.getElementById("linearCanvas");
+  if(!cv) return;
+  const ctx=cv.getContext("2d"), w=cv.width, h=cv.height, ox=w/2, oy=h/2, scale=20;
+  drawGrid(ctx, w, h, ox, oy, scale);
+  
+  if(type==='pos'){
+    // y = 1.5x + 1
+    ctx.strokeStyle="#0b7285"; ctx.lineWidth=2.5; ctx.beginPath();
+    ctx.moveTo(0, oy - (1.5*(-ox/scale) + 1)*scale);
+    ctx.lineTo(w, oy - (1.5*(ox/scale) + 1)*scale);
+    ctx.stroke();
+    ctx.font="12px sans-serif"; ctx.fillStyle="#0b7285"; ctx.fillText("m = 1.5 (Positiva)", ox+1.5*scale, oy-2.5*scale);
+  } else if(type==='neg'){
+    // y = -1.5x + 2
+    ctx.strokeStyle="#c0392b"; ctx.lineWidth=2.5; ctx.beginPath();
+    ctx.moveTo(0, oy - (-1.5*(-ox/scale) + 2)*scale);
+    ctx.lineTo(w, oy - (-1.5*(ox/scale) + 2)*scale);
+    ctx.stroke();
+    ctx.font="12px sans-serif"; ctx.fillStyle="#c0392b"; ctx.fillText("m = -1.5 (Negativa)", ox+1.5*scale, oy-3*scale);
+  } else if(type==='para'){
+    // y = 1.2x + 1
+    ctx.strokeStyle="#0b7285"; ctx.lineWidth=2.5; ctx.beginPath();
+    ctx.moveTo(0, oy - (1.2*(-ox/scale) + 1)*scale);
+    ctx.lineTo(w, oy - (1.2*(ox/scale) + 1)*scale);
+    ctx.stroke();
+    // y = 1.2x - 2 (misma pendiente m = 1.2)
+    ctx.strokeStyle="#2e7d4f"; ctx.lineWidth=2.5; ctx.beginPath();
+    ctx.moveTo(0, oy - (1.2*(-ox/scale) - 2)*scale);
+    ctx.lineTo(w, oy - (1.2*(ox/scale) - 2)*scale);
+    ctx.stroke();
+    ctx.font="12px sans-serif"; ctx.fillStyle="#0b7285"; ctx.fillText("m₁ = m₂ = 1.2 (Paralelas)", ox-7*scale, oy-3.5*scale);
+  } else if(type==='perp'){
+    // y = 2x - 1 (m1=2)
+    ctx.strokeStyle="#0b7285"; ctx.lineWidth=2.5; ctx.beginPath();
+    ctx.moveTo(0, oy - (2*(-ox/scale) - 1)*scale);
+    ctx.lineTo(w, oy - (2*(ox/scale) - 1)*scale);
+    ctx.stroke();
+    
+    // y = -0.5x + 1 (m2=-0.5)
+    ctx.strokeStyle="#c0392b"; ctx.lineWidth=2.5; ctx.beginPath();
+    ctx.moveTo(0, oy - (-0.5*(-ox/scale) + 1)*scale);
+    ctx.lineTo(w, oy - (-0.5*(ox/scale) + 1)*scale);
+    ctx.stroke();
+    
+    ctx.font="12px sans-serif"; ctx.fillStyle="#c0392b"; ctx.fillText("m1 · m2 = -1", ox-4*scale, oy-3*scale);
+  }
+}
+
+function updateTrans(type){
+  const cv=document.getElementById("transCanvas");
+  if(!cv) return;
+  const ctx=cv.getContext("2d"), w=cv.width, h=cv.height, ox=w/2, oy=h/2, scale=20;
+  drawGrid(ctx, w, h, ox, oy, scale);
+  
+  // Función base f(x) = x^2 (Puntos discontinuos gris)
+  ctx.strokeStyle="#9aa3c4";
+  ctx.setLineDash([4,4]);
+  ctx.beginPath();
+  for(let px=-ox; px<=ox; px+=2){
+    let x = px / scale;
+    let y = x * x;
+    let cx = ox + px;
+    let cy = oy - y * scale;
+    if(px===-ox) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy);
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+  
+  // Función transformada (Línea continua gruesa)
+  ctx.strokeStyle="#0b7285";
+  ctx.lineWidth=2.5;
+  ctx.beginPath();
+  for(let px=-ox; px<=ox; px+=2){
+    let x = px / scale;
+    let y = 0;
+    if(type==='base') y = x*x;
+    else if(type==='up') y = x*x + 2;
+    else if(type==='right') y = (x-2)*(x-2);
+    else if(type==='reflect') y = -(x*x);
+    else if(type==='stretch') y = 2*(x*x);
+    
+    let cx = ox + px;
+    let cy = oy - y * scale;
+    if(px===-ox) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy);
+  }
+  ctx.stroke();
+}
+function mark(i){done=done.includes(i)?done.filter(v=>v!==i):[...done,i];save();topic(i)}
+app.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,i=Number(b.dataset.i);if(a==="home")home();else if(a==="topic")topic(i);else if(a==="mark")mark(i)});
+home();
+</script>
+</body>
+</html>
